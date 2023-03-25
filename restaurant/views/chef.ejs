@@ -115,15 +115,15 @@
                                                     <td class="text-center align-middle"><%= product.timeOrder %></td>
                                                     <td class="text-center align-middle">
                                                         <% if(product.status == 1) { %>
-                                                            <button class="btn btn-info mb-2" action="dangchebien" id="cooking" status="2" data-idtable="<%= product.idtable%>" data-iditem="<%= product.productInfo._id %>" data-product_id="<%= product.product_id %>"  data-_id="<%= order._id %>">Thực hiện</button>
+                                                            <button class="btn btn-info mb-2" action="dangchebien" id="cooking" status="2" data-idzone="<%= product.idZone %>" data-idtable="<%= product.idtable%>" data-iditem="<%= product.productInfo._id %>" data-product_id="<%= product.product_id %>"  data-_id="<%= order._id %>">Thực hiện</button>
                                                         <% } %>
                                                         <% if(product.status == 2 || product.status == 1 ) { %>
-                                                            <button class="btn btn-success" action="hoantat" id="cooking" status="3" data-idtable="<%= product.idtable%>" data-iditem="<%= product.productInfo._id %>" data-product_id="<%= product.product_id %>"  data-_id="<%= order._id %>">Hoàn tất</button>
+                                                            <button class="btn btn-success" action="hoantat" id="cooking" status="3" data-idzone="<%= product.idZone %>" data-idtable="<%= product.idtable%>" data-iditem="<%= product.productInfo._id %>" data-product_id="<%= product.product_id %>"  data-_id="<%= order._id %>">Hoàn tất</button>
                                                         <% } %>
                                                     </td>
                                                     <% if(product.status == 1) { %>
                                                         <td class="text-center align-middle">
-                                                            <button class="btn btn-danger" action="huy" id="cooking" status="0" data-idtable="<%= product.idtable%>" data-iditem="<%= product.productInfo._id %>" data-product_id="<%= product.product_id %>" data-_id="<%= order._id %>">Hủy</button>
+                                                            <button class="btn btn-danger" action="huy" id="cooking" status="0" data-idzone="<%= product.idZone %>" data-idtable="<%= product.idtable%>" data-iditem="<%= product.productInfo._id %>" data-product_id="<%= product.product_id %>" data-_id="<%= order._id %>">Hủy</button>
                                                         </td>
                                                     <% } %>
                                                 </tr>

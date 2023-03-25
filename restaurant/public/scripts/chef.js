@@ -42,6 +42,7 @@ btnCookingAll.forEach(item => {
         const status = parseInt(this.getAttribute("status"))
         const iditem = $(this).data("iditem")
         const _id = $(this).data("_id")
+        const idZone = $(this).data("idzone")
 
         let data = {
             idtable: String(idtable),
@@ -50,7 +51,8 @@ btnCookingAll.forEach(item => {
             iditem: iditem,
             amountEdit: parseInt(amountEdit),
             price: parseInt(price),
-            status: status
+            status: status,
+            idZone:idZone
         }
 
         console.log(data);   

@@ -140,8 +140,11 @@ class PaymenController {
                     await Order.findOne({ idtable: idtable })
                         .then(order => {
                             if (order) {
+                                let updateTotalPrice = 0
+
                                 for (let i = 0; i < cart.product.length; i++) {
                                     order.listOrder.push(cart.product[i])
+                                    updateTotalPrice  = updateTotalPrice + cart.product[i].price*cart.product[i].amount
                                 }
 
                                 var updateListOrder = order.listOrder
@@ -150,7 +153,7 @@ class PaymenController {
                                 updateListOrder.timeOrder = new Date().toLocaleString()
                                 updateListOrder.email_staff = req.session.email
 
-                                Order.updateOne({ idtable: idtable }, { listOrder: updateListOrder })
+                                Order.updateOne({ idtable: idtable }, { listOrder: updateListOrder,$inc:{totalPrice:updateTotalPrice }})
                                     .then(() => res.json({ code: 0, message: "Xác nhận order" }))
                             }
                             else {

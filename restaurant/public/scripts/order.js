@@ -214,7 +214,8 @@ $(document).ready(function () {
             product_id: product_id,
             amount: parseInt($("#product-amount").html()),
             price: price,
-            note: notefood
+            note: notefood,
+            idZone: Date.now()
         }
 
         $.ajax({
