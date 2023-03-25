@@ -11,7 +11,8 @@ const Product = new Schema({
     type: Number,
     //1: khai vị, 2:salad, 3: thịt bò, 4: Hải sản, 5: Các loại thịt, 6: Pasta, 7:Lẩu
     customerCare: String,
-    createdAt: String
+    createdAt: String,
+    toggle:{type:Boolean, default:true}
 })
 
 module.exports = mongoose.model('Product', Product)

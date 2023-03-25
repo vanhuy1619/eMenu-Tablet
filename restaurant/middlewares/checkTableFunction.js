@@ -10,7 +10,7 @@ async function checkTableFunction(req, res, next) {
                 if (user.position === 0 || user.position === 2)
                     next()
                 else {
-                    return res.redirect("/user/table")
+                    return res.json({error:3,message:"Không phải phân quyền của bạn"})
                 }
             })
     }

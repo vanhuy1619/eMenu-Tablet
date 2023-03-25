@@ -8,9 +8,9 @@ async function checkChef(req, res, next) {
             .then(user => {
                 if (user.position === 1)
                     next()
-                    else{
-                        return res.redirect("/")
-                    }
+                else {
+                    return res.json({error:3,message:"Không phải phân quyền của bạn"})
+                }
             })
     }
 }

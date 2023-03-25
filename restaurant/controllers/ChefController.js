@@ -1,4 +1,5 @@
 const Order = require("../models/Order")
+const Product = require("../models/Product")
 const User = require("../models/User")
 
 class ChefController {
@@ -13,6 +14,12 @@ class ChefController {
                         }))
                 }
             })
+    }
+
+    async getProducts(req, res) {
+        await Product.find({})
+            .then((data) => res.json({ code: 0, products: data }))
+            .catch(error => res.json({ code: 1, message: error }))
     }
 
     async updateOrderStatus(req, res) {
