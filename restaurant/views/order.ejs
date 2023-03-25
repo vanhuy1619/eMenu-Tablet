@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gogi | Sản Phẩm</title>
+    <link rel="shortcut icon" href="/images/mkav-tea/logo_transparent.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&Montserrat:wght@400;500;600;700&Barlow:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<style>
+    #edit-modal {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .form {
+        padding: 24px 32px;
+        background: #fff;
+        box-shadow: 0 0 4px 6px rgba(0, 0, 0, 0.05);
+        width: 450px;
+        border-radius: 16px;
+    }
+
+    .form .form-title {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e6e6e6;
+        font-size: 2.5rem;
+        font-weight: 600;
+    }
+
+    .form .form-content {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .form .form-content .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .form .form-content .form-group label {
+        margin-bottom: 2px;
+        font-size: 16px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+    }
+
+    .form .form-content .form-group input[type=text] {
+        padding: 8px 14px;
+        font-size: 16px;
+        border: 1px solid #e6e6e6;
+        outline: none;
+        border-radius: 5px;
+        font-weight: 400;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .button-group {
+        display: inline-flex;
+        justify-content: right;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .form .form-content button {
+        padding: 10px 14px;
+        width: 25%;
+        margin-left: 14px;
+        color: white;
+        background-color: #333;
+        border: none;
+        border-radius: 3px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    #error-text {
+        color: #721c24;
+        padding: 8px 10px;
+        text-align: center;
+        border-radius: 5px;
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        font-size: 16px;
+        font-weight: 400;
+        visibility: hidden;
+    }
+
+    #loading {
+        position: fixed;
+        display: none;
+        top: calc(50% - 60px);
+        left: calc(50% - 60px);
+        z-index: 9999;
+        width: 120px;
+        height: 120px;
+        overflow: hidden;
+        display: none;
+    }
+
+    #loading img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+    }
+
+    .order-sidebar-right-item{
+        background-color: white;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        padding-bottom: 20px;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <header class="order-header">
+            <div class="container">
+                <div class="order-header-logo">
+                    <a href="/"><img src="/images/mkav-tea/logo_transparent.png" alt=""></a>
+                </div>
+                <div class="order-header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search">
+                </div>
+                <% if (!locals.user) { %>
+                    <li class="btn-group">
+                        <button class="btn" id="login-btn">Đăng Nhập</button>
+                        <button class="btn btn-transparent" id="register-btn">Đăng Ký</button>
+                    </li>
+                    <% } else if (user.position==0) {%>
+                        <li class="btn-group user-group">
+                            <a href="/profile/?tab=profile"><img src="<%= user.image %>" alt=""></a>
+                            <div class="dropdown">
+                                <i class="fas fa-sort-down"></i>
+                                <ul class="dropdown-menu">
+                                    <!-- <li>
+                                        <i class="fas fa-user-alt"></i>
+                                        <a href="/profile/?tab=profile">Thông tin tài khoản</a>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-history"></i>
+                                        <a href="/profile/?tab=history">Lịch sử mua hàng</a>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <a href="/profile/?tab=order">Đơn hàng của tôi</a>
+                                    </li> -->
+                                    <li>
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <a href="/logout">Đăng xuất</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <% } else if (user.position==6) {%>
+                            <li class="btn-group user-group">
+                                <a href="/admin/?tab=employee-manager"><img src="<%= user.image %>" alt=""></a>
+                                <div class="dropdown">
+                                    <i class="fas fa-sort-down"></i>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <i class="fas fa-user-alt"></i>
+                                            <a href="/admin/?tab=employee-manager">Quản lí nhân viên</a>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-reply-all"></i>
+                                            <a href="/admin/?tab=request-manager">Quản lí yêu cầu</a>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            <a href="/user/logout">Đăng xuất</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <% } else if (user.position==1) {%>
+                                <li class="btn-group user-group">
+                                    <a href="/customer-care/?tab=product-manager"><img src="<%= user.image %>"
+                                            alt=""></a>
+                                    <div class="dropdown">
+                                        <i class="fas fa-sort-down"></i>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <i class="fas fa-mug-hot"></i>
+                                                <a href="/customer-care/?tab=product-manager">Quản lí sản
+                                                    phẩm</a>
+                                            </li>
+                                            <li>
+                                                <i class="fas fa-sign-out-alt"></i>
+                                                <a href="/user/logout">Đăng xuất</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <% } else if (user.position==3) {%>
+                                    <li class="btn-group user-group">
+                                        <a href="/salesman/?tab=order-manager"><img src="<%= user.image %>" alt=""></a>
+                                        <div class="dropdown">
+                                            <i class="fas fa-sort-down"></i>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                    <a href="/salesman/?tab=order-manager">Quản lí đặt hàng</a>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-sign-out-alt"></i>
+                                                    <a href="/user/logout">Đăng xuất</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <% } else if (user.position==2) {%>
+                                        <li class="btn-group user-group">
+                                            <a href="/shipper/?tab=shipper-manager"><img src="<%= user.image %>"
+                                                    alt=""></a>
+                                            <div class="dropdown">
+                                                <i class="fas fa-sort-down"></i>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <i class="fas fa-shopping-cart"></i>
+                                                        <a href="/shipper/?tab=shipper-manager">Đơn đặt hàng</a>
+                                                    </li>
+                                                    <li>
+                                                        <i class="fas fa-sign-out-alt"></i>
+                                                        <a href="/user/logout">Đăng xuất</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <% }%>
+            </div>
+        </header>
+        <section class="order-main">
+            <div class="container">
+                <div class="order-sidebar order-sidebar-left">
+                    <h3>Danh Mục</h3>
+                    <!-- 1: khai vị, 2:salad, 3: thịt bò, 4: Hải sản, 5: Các loại thịt, 6: Pasta, 7:Lẩu -->
+                    <ul id="order">
+                        <li id="order-1">Khai vị<span>8</span></li>
+                        <li id="order-2">Salad<span>81</span></li>
+                        <li id="order-3">Thịt bò<span>8</span></li>
+                        <li id="order-4">Hải sản<span>8</span></li>
+                        <li id="order-5">Các loại thịt<span>8</span></li>
+                        <li id="order-6">Pasta<span>8</span></li>
+                        <li id="order-7">Lẩu<span>8</span></li>
+                    </ul>
+                </div>
+                <div class="order-center" id="order-center">
+                    <div class="category">
+                        <h3>Khai vị</h3>
+                        <i class="fas fa-chevron-down fa-chevron" id="chevron-1"></i>
+                        <div class="list-product" id="list-product-1">
+                            <% products.forEach(function(product) { %>
+                                <% if (product.type==1) { %>
+                                    <div class="product">
+                                        <div>
+                                            <img src="<%= product.image %>" alt="">
+                                        </div>
+                                        <div class="product-bottom">
+                                            <h5>
+                                                <%= product.name %>
+                                            </h5>
+                                            <div data-price="<%= product.price %>">
+                                                <%= product.price %>.000đ<span data-price="<%= product.oldPrice %>">
+                                                        <%= product.oldPrice %>.000đ
+                                                    </span>
+                                            </div>
+                                            <i class="fas fa-plus-circle open-popup" data-id="<%= product.id %>"
+                                                idtable="<%= idtable %>"></i>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+
+                                        <% }) %>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <h3>Salad</h3>
+                        <i class="fas fa-chevron-down fa-chevron" id="chevron-2"></i>
+                        <div class="list-product" id="list-product-2">
+                            <% products.forEach(function(product) { %>
+                                <% if (product.type==2) { %>
+                                    <div class="product">
+                                        <div>
+                                            <img src="<%= product.image %>" alt="">
+                                        </div>
+                                        <div class="product-bottom">
+                                            <h5>
+                                                <%= product.name %>
+                                            </h5>
+                                            <div data-price="<%= product.price %>">
+                                                <%= product.price %>.000đ<span data-price="<%= product.oldPrice %>">
+                                                        <%= product.oldPrice %>.000đ
+                                                    </span>
+                                            </div>
+                                            <i class="fas fa-plus-circle open-popup" data-id="<%= product.id %>"
+                                                idtable="<%= idtable %>"></i>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+
+                                        <% }) %>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <h3>Thịt bò</h3>
+                        <i class="fas fa-chevron-down fa-chevron" id="chevron-3"></i>
+                        <div class="list-product" id="list-product-3">
+                            <% products.forEach(function(product) { %>
+                                <% if (product.type==3) { %>
+                                    <div class="product">
+                                        <div>
+                                            <img src="<%= product.image %>" alt="">
+                                        </div>
+                                        <div class="product-bottom">
+                                            <h5>
+                                                <%= product.name %>
+                                            </h5>
+                                            <div data-price="<%= product.price %>">
+                                                <%= product.price %>.000đ<span data-price="<%= product.oldPrice %>">
+                                                        <%= product.oldPrice %>.000đ
+                                                    </span>
+                                            </div>
+                                            <i class="fas fa-plus-circle open-popup" data-id="<%= product.id %>"
+                                                idtable="<%= idtable %>"></i>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+
+                                        <% }) %>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <h3>Hải sản</h3>
+                        <i class="fas fa-chevron-down fa-chevron" id="chevron-4"></i>
+                        <div class="list-product" id="list-product-4">
+                            <% products.forEach(function(product) { %>
+                                <% if (product.type==4) { %>
+                                    <div class="product">
+                                        <div>
+                                            <img src="<%= product.image %>" alt="">
+                                        </div>
+                                        <div class="product-bottom">
+                                            <h5>
+                                                <%= product.name %>
+                                            </h5>
+                                            <div data-price="<%= product.price %>">
+                                                <%= product.price %>.000đ<span data-price="<%= product.oldPrice %>">
+                                                        <%= product.oldPrice %>.000đ
+                                                    </span>
+                                            </div>
+                                            <i class="fas fa-plus-circle open-popup" data-id="<%= product.id %>"
+                                                idtable="<%= idtable %>"></i>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+
+                                        <% }) %>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <h3>Các loại thịt</h3>
+                        <i class="fas fa-chevron-down fa-chevron" id="chevron-5"></i>
+                        <div class="list-product" id="list-product-5">
+                            <% products.forEach(function(product) { %>
+                                <% if (product.type==5) { %>
+                                    <div class="product">
+                                        <div>
+                                            <img src="<%= product.image %>" alt="">
+                                        </div>
+                                        <div class="product-bottom">
+                                            <h5>
+                                                <%= product.name %>
+                                            </h5>
+                                            <div data-price="<%= product.price %>">
+                                                <%= product.price %>.000đ<span data-price="<%= product.oldPrice %>">
+                                                        <%= product.oldPrice %>.000đ
+                                                    </span>
+                                            </div>
+                                            <i class="fas fa-plus-circle open-popup" data-id="<%= product.id %>"
+                                                idtable="<%= idtable %>"></i>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+
+                                        <% }) %>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <h3>Pasta</h3>
+                        <i class="fas fa-chevron-down fa-chevron" id="chevron-6"></i>
+                        <div class="list-product" id="list-product-6">
+                            <% products.forEach(function(product) { %>
+                                <% if (product.type==6) { %>
+                                    <div class="product">
+                                        <div>
+                                            <img src="<%= product.image %>" alt="">
+                                        </div>
+                                        <div class="product-bottom">
+                                            <h5>
+                                                <%= product.name %>
+                                            </h5>
+                                            <div data-price="<%= product.price %>">
+                                                <%= product.price %>.000đ<span data-price="<%= product.oldPrice %>">
+                                                        <%= product.oldPrice %>.000đ
+                                                    </span>
+                                            </div>
+                                            <i class="fas fa-plus-circle open-popup" data-id="<%= product.id %>"
+                                                idtable="<%= idtable %>"></i>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+
+                                        <% }) %>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <h3>Lẩu</h3>
+                        <i class="fas fa-chevron-down fa-chevron" id="chevron-7"></i>
+                        <div class="list-product" id="list-product-7">
+                            <% products.forEach(function(product) { %>
+                                <% if (product.type==7) { %>
+                                    <div class="product">
+                                        <div>
+                                            <img src="<%= product.image %>" alt="">
+                                        </div>
+                                        <div class="product-bottom">
+                                            <h5>
+                                                <%= product.name %>
+                                            </h5>
+                                            <div data-price="<%= product.price %>">
+                                                <%= product.price %>.000đ<span data-price="<%= product.oldPrice %>">
+                                                        <%= product.oldPrice %>.000đ
+                                                    </span>
+                                            </div>
+                                            <i class="fas fa-plus-circle open-popup" data-id="<%= product.id %>"
+                                                idtable="<%= idtable %>"></i>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+
+                                        <% }) %>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-sidebar order-sidebar-right">
+                    <!-- DANH SÁCH GỌI MÓN -->
+                    <div class="order-sidebar-right-item">
+                        <div class="cart-group-top">
+                            <div class="cart-title">
+                                <div class="cart-title-left">Danh sách gọi món</div>
+                                <div class="cart-title-right" id="remove-all-cart" data-idtable="<%= cart.idtable %>">Xóa tất cả</div>
+                            </div>
+                            <div class="cart-order">
+                                <% if (locals.cart) { %>
+                                    <% cart.product.forEach(function(pro) { %>
+                                        <div class="cart-order-item">
+                                            <div class="cart-order-item-left">
+                                                <div class="name">
+                                                    <%= pro.productInfo.name%>
+                                                </div>
+                                                <div class="customize"><%= pro.note %></div>
+                                                <div class="total" data-price="<%= pro.price * pro.amount %>">
+                                                    <%= pro.price %>.000đ x <%= pro.amount %> = <%= pro.price *
+                                                                pro.amount %>.000đ
+                                                </div>
+                                            </div>
+                                            <div class="cart-order-item-right">
+                                                <div class="amount">
+                                                    <%= pro.amount %>
+                                                </div>
+                                                <div class="remove-cart" data-id="<%= pro.product_id %>" data-idtable="<%= pro.idtable %>">Xóa</div>
+                                            </div>
+                                        </div>
+                                        <% })%>
+                                            <% } %>
+                            </div>
+                        </div>
+                        <div class="cart-group-bottom">
+                            <div class="cart-count">
+                                <img src="/images/product/icon-glass-tea.png" alt="">
+                                <!-- <div class="cart-count-item cart-count-item-1">x</div> -->
+                                <div class="cart-count-item cart-count-item-2"></div>
+                                <div class="cart-count-item cart-count-item-3">Tổng tiền</div>
+                                <div class="cart-count-item cart-count-item-4">
+                                    <%if (locals.cart) {%>
+                                        <%= cart.totalPrice%>.000đ
+                                            <% } else { %>
+                                                0đ
+                                                <%} %>
+                                </div>
+                            </div>
+                            <div class="cart-button" id="pay" data-idtable="<%= cart.idtable %>">Xác nhận</div>
+                        </div>
+                    </div>
+
+                    <!-- DANH SÁCH MÓN CHỜ TỪ BẾP -->
+                    <div class="order-sidebar-right-item">
+                        <div class="cart-group-top">
+                            <div class="cart-title">
+                                <div class="cart-title-left">Món đang nấu</div>
+                            </div>
+                            <div class="cart-order-wait" style="padding:12px;">
+                                <% if(locals.foodOrdered) { %>
+                                    <% foodOrdered.forEach(function(pro) { %>
+                                <div class="cart-order-item" style="margin-bottom: 12px;">
+                                    <div class="cart-order-item-left">
+                                        <div style="display: flex;justify-content: space-between;">
+                                            <div class="name">
+                                                <%= pro.productInfo.name %>
+                                            </div>
+                                            <div class="cart-order-item-right">
+                                                <div class="amount" style="color: #f7293d; font-weight: 700;">
+                                                    <%= pro.amount %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="customize"><%= pro.note %></div>
+                                        <!-- <div class="total" data-price="tiền*soluong">
+                                            <%= pro.price %>.000đ x <%= pro.amount %> = <%= pro.price *
+                                                                pro.amount %>.000đ
+                                        </div> -->
+                                        <% if(pro.status==2) {%>
+                                            <i style="color: green;font-size: 1.5rem;border-radius: 6px;padding: 4px;width: fit-content;">Đang chế biến</i>
+                                            <% } %>
+                                        <% if(pro.status==1) {%>
+                                            <i style="color:#ffcf00;font-size: 1.5rem;border-radius: 6px;padding: 4px;width: fit-content;">Chờ xác nhận</i>
+                                            <% } %>
+                                        <% if(pro.status==0) {%>
+                                            <i style="color:red;font-size: 1.5rem;border-radius: 6px;padding: 4px;width: fit-content;">Hủy</i>
+                                            <% } %>
+                                    </div>
+                                    
+                                </div>
+                                <% }) %>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BILL -->
+                    <div class="order-sidebar-right-item">
+                        <div class="cart-group-top">
+                            <div class="cart-title">
+                                <div class="cart-title-left">Hóa đơn</div>
+                            </div>
+                            <div class="cart-order">
+                                <% if (locals.bills) { %>
+                                    <% bills.forEach(function(pro) { %>
+                                        <div class="cart-order-item">
+                                            <div class="cart-order-item-left">
+                                                <div class="name">
+                                                    <%= pro.productInfo.name%>
+                                                </div>
+                                                <div class="customize"><%= pro.note %></div>
+                                                <div class="total" data-price="<%= pro.price * pro.amount %>">
+                                                    <%= pro.price %>.000đ x <%= pro.amount %> = <%= pro.price *
+                                                                pro.amount %>.000đ
+                                                </div>
+                                            </div>
+                                            <div class="cart-order-item-right">
+                                                <div class="amount">
+                                                    <%= pro.amount %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% })%>
+                                            <% } %>
+                            </div>
+                        </div>
+                        <div class="cart-group-bottom">
+                            <div class="cart-count">
+                                <img src="/images/product/icon-glass-tea.png" alt="">
+                                <!-- <div class="cart-count-item cart-count-item-1">x</div> -->
+                                <div class="cart-count-item cart-count-item-2"></div>
+                                <div class="cart-count-item cart-count-item-3">Tổng tiền</div>
+                                <div class="cart-count-item cart-count-item-4">
+                                    <%if (locals.bills) {%>
+                                        <%= bills.totalPrice%>.000đ
+                                            <% } else { %>
+                                                0đ
+                                                <%} %>
+                                </div>
+                            </div>
+                            <div class="cart-button" id="pay" data-idtable="<%= cart.idtable %>">Xác nhận</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <div class="popup-info">
+                    <div class="popup-info-left">
+                        <img id="product-image" src="images/product/tchk.png" alt="">
+                    </div>
+                    <div class="popup-info-right">
+                        <div class="name" id="product-name">Sữa Chua Dâu Tằm Hạt Dẻ</div>
+                        <div class="price">
+                            <div>
+                                <span id="product-price">29.000đ</span>
+                                <span id="old-price">39.000đ</span>
+                            </div>
+                        </div>
+                        <!-- <div class="info" id="product-info">Chưa có thông tin</div> -->
+                        <div class="quantity">
+                            <i class="fas fa-minus-circle" id="reduce-product"></i>
+                            <div class="amount" id="product-amount">1</div>
+                            <i class="fas fa-plus-circle" id="add-product"></i>
+                            <div class="money" id="product-money">29.000đ</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-times" id="close-popup"></i>
+                </div>
+                <div class="popup-customize">
+                    <div class="popup-customize-item">
+                        <div class="title">Ghi chú món ăn nếu có</div>
+                        <div class="content-list">
+                            <div class="content">
+                                <textarea style="width: 100%;" name="note_food" id="note_food" cols="30"
+                                    rows="10"></textarea>
+                                <span class="checkmark"></span>
+                            </div>
+                            <div>
+                                <button type="submit" id="confirm-order">Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="overlay">
+
+            </div>
+        </div>
+
+        <div class="popup" id="edit-modal" style="display: none;">
+            <div class="form">
+                <div class="form-title">
+                    Cập Nhật Thông Tin
+                </div>
+                <div class="form-content">
+                    <form action="" id="edit-form">
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại</label>
+                            <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại...">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" name="address" id="address" placeholder="Nhập địa chỉ...">
+                        </div>
+                        <div id="error-text">Vui lòng nhập</div>
+                        <div class="button-group">
+                            <button type="button" id="close-btn">Đóng</button>
+                            <button type="submit" id="save-btn">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="overlay" id="overlay">
+            </div>
+        </div>
+
+        <i class="fas fa-arrow-up" id="scroll-top"></i>
+    </div>
+    <div id="loading">
+        <img src="/images/loading.svg" />
+    </div>
+</body>
+
+<script src="/scripts/account-btn.js"></script>
+<script src="/scripts/loading.js"></script>
+<script src="/scripts/handle-dropdown.js"></script>
+<script src="/scripts/payment.js"></script>
+<script src="/scripts/order.js"></script>
+
+
+</html>
