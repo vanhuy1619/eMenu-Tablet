@@ -72,8 +72,7 @@ $(document).ready(function () {
             type: "GET",
             success: function (res) {
                 if (res.code === 0) {
-                    console.log(res);
-                    displayPopup("flex", res.product, res.toppings)
+                    displayPopup("flex", res.product)
                 } else if (res.code === 2) {
                     swal({
                         title: "Error",
@@ -100,16 +99,16 @@ $(document).ready(function () {
         resetPopup()
     })
 
-    function updateProductInfo() {
-        $("#product-info").html(`${size}${sugar}${ice}${toppings}`)
-    }
+    // function updateProductInfo() {
+    //     $("#product-info").html(`${size}${sugar}${ice}${toppings}`)
+    // }
 
-    function displayPopup(display, product, toppings) {
+    function displayPopup(display, product) {
         $("#popup").css("display", display)
         if (product)
-            updatePopup(product, toppings)
+            updatePopup(product)
 
-        updateProductInfo()
+        // updateProductInfo()
         resetPopup()
     }
 

@@ -2,6 +2,8 @@ const Product = require("../models/Product")
 const Cart = require("../models/Cart")
 const Order = require("../models/Order")
 const User = require("../models/User")
+const Bill = require("../models/Bill")
+const Table = require("../models/Table")
 
 class PaymenController {
     async payment(req, res) {
@@ -118,14 +120,13 @@ class PaymenController {
 
                     let cartEdit = []
 
-                    
-                    for(var i = 0;i<cart.product.length;i++)
-                    {
+
+                    for (var i = 0; i < cart.product.length; i++) {
                         let cartItem = cart.product[i];
                         cartItem.status = 1 //'Chờ xác nhận',
                         cartItem.timeOrder = new Date().toLocaleString(),
-                        cartItem.email_staff = req.session.email //email nhân viên xác nhận order
-                        
+                            cartItem.email_staff = req.session.email //email nhân viên xác nhận order
+
                         cartEdit.push(cartItem)
                     }
 
@@ -144,7 +145,7 @@ class PaymenController {
 
                                 for (let i = 0; i < cart.product.length; i++) {
                                     order.listOrder.push(cart.product[i])
-                                    updateTotalPrice  = updateTotalPrice + cart.product[i].price*cart.product[i].amount
+                                    updateTotalPrice = updateTotalPrice + cart.product[i].price * cart.product[i].amount
                                 }
 
                                 var updateListOrder = order.listOrder
@@ -153,7 +154,7 @@ class PaymenController {
                                 updateListOrder.timeOrder = new Date().toLocaleString()
                                 updateListOrder.email_staff = req.session.email
 
-                                Order.updateOne({ idtable: idtable }, { listOrder: updateListOrder,$inc:{totalPrice:updateTotalPrice }})
+                                Order.updateOne({ idtable: idtable }, { listOrder: updateListOrder, $inc: { totalPrice: updateTotalPrice } })
                                     .then(() => res.json({ code: 0, message: "Xác nhận order" }))
                             }
                             else {
@@ -165,6 +166,36 @@ class PaymenController {
                         .catch(err => res.json({ code: 1, message: "Order thất bại" }))
                 }
             })
+
+    }
+
+    async confirmPay(req, res) {
+        if (!req.session.email)
+            return res.json({ code: 2, message: "Vui lòng đăng nhập!" })
+
+        let idtable = req.params.idtable
+        let listOrder
+
+        await Order.findOne({ idtable: idtable })
+            .then((order) => {
+                listOrder = order.listOrder
+            })
+
+        let billObj = {
+            emailStaffPay: req.session.email,
+            idtable: idtable,
+            timeZone: Date.now(),
+            timePay: new Date().toLocaleString(),
+            listOrder: listOrder,
+        }
+
+        const newBill = new Bill(billObj)
+        newBill.save()
+
+        await Order.deleteOne({ idtable: idtable })
+        await Table.updateOne({ id: idtable }, { status: 'Trống' })
+        await Cart.deleteOne({ idtable: idtable })
+            .then(() => res.json({ code: 0, message: "Thanh toán thành công" }))
 
     }
 

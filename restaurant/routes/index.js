@@ -2,10 +2,8 @@ const siteRouter = require('./site')
 const staffRouter = require('./staff')
 const orderRouter = require('./order')
 // const adminRouter = require('./admin')
-// const customerCareRouter = require('./customer-care')
 const paymentRouter = require('./payment')
 const chefRouter = require('./chef')
-// const shipperRouter = require('./shipper')
 const errorRouter = require('./error')
 
 module.exports = function route(app) {
@@ -13,9 +11,7 @@ module.exports = function route(app) {
     app.use("/user", staffRouter)
     app.use("/order", orderRouter)
     // app.use("/admin", adminRouter)
-    // app.use("/customer-care", customerCareRouter)
     app.use("/payment", paymentRouter)
     app.use("/chef", chefRouter)
-    // app.use("/shipper", shipperRouter)
     app.use(errorRouter)
 }

@@ -7,4 +7,5 @@ router.get("/", siteController.index)
 router.get("/store", siteController.store)
 router.get("/profile", checkUser, siteController.profile)
 router.get("/logout", siteController.logout)
+
 module.exports = router

@@ -112,7 +112,7 @@ $(".history").click(function () {
 })
 
 $(".logout").click(function () {
-    window.location.href = "/user/logout"
+    window.location.href = "/logout"
 })
 
 {

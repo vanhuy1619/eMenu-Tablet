@@ -10,6 +10,7 @@ class OrderController {
         const email = req.session.email
         let user
         let cart
+        let totalbill = 0
         let foodOrdered = []
         let bills = []
 
@@ -38,7 +39,11 @@ class OrderController {
                 if (c) {
                     for (let i = 0; i < c.listOrder.length; i++) {
                         if (c.listOrder[i].status == 3)
+                        {
+                            totalbill += c.listOrder[i].price * c.listOrder[i].amount;
                             bills.push(c.listOrder[i])
+                        }
+                            
                         if (c.listOrder[i].status == 1 || c.listOrder[i].status == 2)
                             foodOrdered.push(c.listOrder[i])
                     }
@@ -55,6 +60,7 @@ class OrderController {
                     idtable: idtable,
                     foodOrdered: foodOrdered || null,
                     bills: bills || null,
+                    totalbill: totalbill || null
                 })
             })
     }

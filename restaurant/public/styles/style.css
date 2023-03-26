@@ -179,7 +179,7 @@
     height: 632px;
     margin-top: 90px;
     background: linear-gradient(0deg, rgba(75, 72, 72, 0.6),     
-    rgba(88, 85, 85, 0.6)), url("../images/header-bg.jpeg");
+    rgba(88, 85, 85, 0.6)), url("../images/header-bg.png");
     background-repeat: no-repeat;
     background-size: 100vw;
     display: flex;
@@ -223,7 +223,7 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    height: 417px;
+    height: 330px;
 }
 
 .product-header {
@@ -417,7 +417,7 @@
 /* FOOTER */
 footer {
     background: linear-gradient(0deg, rgba(51, 51, 51, 0.6),     
-    rgba(51, 51, 51, 0.6)), url("../images/footer-bg.jpeg");
+    rgba(51, 51, 51, 0.6)), url("../images/footer-bg.jpg");
     color: rgb(243, 243, 243);
 }
 
@@ -456,7 +456,8 @@ footer .container {
 }
 
 :is(.footer-contact, .footer-content) h4 {
-    color: var(--primary); 
+    /* color: var(--primary);  */
+    color: white;
     text-align: left;
     text-transform: uppercase;
     font-size: 2.4rem;
@@ -464,7 +465,8 @@ footer .container {
 }
 
 .footer-contact i {
-    color: var(--primary);  
+    /* color: var(--primary);   */
+    color: white;
 }
 
 :is(.footer-contact, .footer-content) ul {

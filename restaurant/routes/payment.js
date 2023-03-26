@@ -9,5 +9,6 @@ router.post("/add-cart",paymentController.addcart)
 router.delete("/delete-cart",paymentController.deleteProductFromCart)
 router.delete("/delete-cart-all/:id",paymentController.deleteCart)
 router.post("/confirm-order/:idtable",paymentController.confirmOrder)
+router.post("/confirm-pay/:idtable",paymentController.confirmPay)
 
 module.exports = router
