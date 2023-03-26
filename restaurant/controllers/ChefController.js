@@ -77,5 +77,12 @@ class ChefController {
             }
         }
     }
+
+    async updateToggleFood(req, res) {
+        let data = req.body
+        await Product.findOneAndUpdate({ id: data.id }, { toggle: data.toggle })
+            .then(() => res.json({ code: 0, message: 'Cập nhật trạng thái món ăn thành công' }))
+            .catch(err => res.json({ code: 0, message: 'Cập nhật trạng thái món ăn thất bại' }))
+    }
 }
 module.exports = new ChefController()

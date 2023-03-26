@@ -46,7 +46,7 @@ class OrderController {
             })
 
 
-        await Product.find({})
+        await Product.find({toggle: true})
             .then(products => {
                 res.render("order", {
                     user: user || null,

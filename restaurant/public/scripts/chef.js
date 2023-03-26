@@ -72,6 +72,7 @@ btnCookingAll.forEach(item => {
                     else {
                         e.target.style.display = 'none';
                         e.target.parentNode.parentNode.cells[6].childNodes[1].style.display = 'none'
+                        e.target.parentNode.parentNode.cells[5].style.display = 'none'
                         e.target.parentNode.parentNode.cells[2].childNodes[1].disabled = true
                     }
                 }
@@ -116,14 +117,34 @@ function changeAmount() {
             let navmenu = document.getElementById("navmenu");
 
             if (navmenu.classList.contains("active")) {
-                orderHtml.innerHTML = ""
 
                 $.ajax({
                     type: "GET",
                     url: "/chef/list-products",
                     success: function (res) {
                         if (res.code === 0) {
-                            console.log(res);
+                            res.products.sort((a, b) => String(a.type).localeCompare(String(b.type)));
+                            let htmlp = res.products.map(ele => {
+                                return `<div class='col-md-3 mb-4'>
+                                            <div style='box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding:6px;height:100%'>
+                                                <div>
+                                                    <img style='height:100px;object-fit:cover' src='${ele.image}' />
+                                                </div>
+                                                <div>
+                                                    <p style ='text-align:center'>${ele.name}</p>
+                                                    <div style='display:flex;justify-content:center'>
+                                                        <label class="switch">
+                                                            <input type="checkbox"  data-id="${ele.id}" ${ele.toggle == true ? 'checked' : ''}>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`
+                            })
+                            orderHtml.innerHTML = htmlp.join('')
+
+                            updateToggleFood()
                         }
                     },
                     error: function (err) {
@@ -136,4 +157,40 @@ function changeAmount() {
             }
         })
     });
+}
+
+function updateToggleFood() {
+    let toggle
+    let listToggle = document.querySelectorAll('input[type="checkbox"]')
+    listToggle.forEach(ele => {
+        ele.onclick = function (e) {
+            if ($(this).is(':checked')) {
+                toggle = true
+            }
+            else {
+                toggle = false
+            }
+
+            let data = {
+                id: $(this).data('id'),
+                toggle: toggle
+            }
+
+            $.ajax({
+                type: "PUT",
+                url: "/chef/update-toggle-food",
+                data: JSON.stringify(data),
+                processData: false,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    console.log("Thành công");
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+
+        }
+    })
 }
