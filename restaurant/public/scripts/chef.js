@@ -71,8 +71,12 @@ btnCookingAll.forEach(item => {
                     }
                     else {
                         e.target.style.display = 'none';
+                        console.log(e.target.parentNode.parentNode.cells[6]);
                         e.target.parentNode.parentNode.cells[6].childNodes[1].style.display = 'none'
-                        e.target.parentNode.parentNode.cells[5].style.display = 'none'
+                        if(status == 3)
+                        {
+                            e.target.parentNode.parentNode.cells[5].style.display = 'none'
+                        }
                         e.target.parentNode.parentNode.cells[2].childNodes[1].disabled = true
                     }
                 }
@@ -123,6 +127,7 @@ function changeAmount() {
                     url: "/chef/list-products",
                     success: function (res) {
                         if (res.code === 0) {
+                            // console.log(res);
                             res.products.sort((a, b) => String(a.type).localeCompare(String(b.type)));
                             let htmlp = res.products.map(ele => {
                                 return `<div class='col-md-3 mb-4'>

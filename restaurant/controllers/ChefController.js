@@ -8,10 +8,17 @@ class ChefController {
             .then(async (user) => {
                 if (user) {
                     await Order.find({})
-                        .then(orders => res.render('chef', {
-                            chef: user,
-                            orders: orders
-                        }))
+                        .then(orders => {
+                            orders.forEach(ele=>{
+                                ele.listOrder.sort(function (a, b) {
+                                    return b.idZone - a.idZone
+                                })
+                            }),
+                            res.render('chef', {
+                                chef: user,
+                                orders: orders
+                            })
+                        })
                 }
             })
     }
