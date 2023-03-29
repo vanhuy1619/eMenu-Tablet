@@ -6,6 +6,7 @@ const Bill = new Schema({
     idtable:String,
     timeZone:String,
     timePay:String,
+    totalPrice:Number,
     listOrder:Array
     
 })

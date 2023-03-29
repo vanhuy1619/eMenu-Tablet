@@ -82,61 +82,7 @@ function deleteEmployee(e) {
     }
 }
 
-clickDeleteEmployeeButton()
 
-function clickDeleteEmployeeButton() {
-    $(".delete-employee").click(e => {
-        swal({
-            title: "DELETE",
-            text: `Xóa nhân viên này ?`,
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                    deleteEmployee(e)
-                }
-            })
-    })
-}
-
-clickEditEmployeeButton()
-
-function clickEditEmployeeButton() {
-    $(".edit-employee").click(e => {
-        const id = e.target.dataset.id
-
-        $.ajax({
-            url: "/admin/" + id,
-            type: "GET",
-            success: function (res) {
-                updateEditModal(res.user)
-            },
-            error: function (err) {
-            }
-        })
-
-        $('#edit-modal').modal('show')
-    })
-
-    function updateEditModal(user) {
-        $("#edit-name").val(user.name)
-
-        if (user.gender === "male")
-            $("#edit-male").attr("checked", "checked")
-        else if ((user.gender === "female"))
-            $("#edit-female").attr("checked", "checked")
-        else
-            $("#edit-other").attr("checked", "checked")
-
-        $("#edit-position").val(user.position.toString()).change()
-
-        $("#edit-email").val(user.email)
-
-        $("#edit-save-btn").data("id", user._id)
-    }
-}
 
 helper()
 
@@ -194,7 +140,7 @@ function getUrlParameter(sParam) {
 }
 
 function updateTab(tab) {
-    $(".tab").css("display", "none")
+    // $(".tab").css("display", "none")
     $("#" + tab).css("display", "block")
 
     $(".profile-main__left--item").removeClass("active")
@@ -216,6 +162,92 @@ $(".request-manager").click(function () {
     updateTab("request-manager")
 })
 
+function searchByDateCheckin() {
+    let x
+    $('#demo-one-input').change(function () {
+        let searchString = $('#demo-one-input').val().replaceAll('/', '-');
+        [a, b, c] = searchString.split("-")
+        searchString = [b, a, c].join("-")
+        $('#demo-one-input').val(searchString)
 
-
-
+        $.ajax({
+            url: "/admin/get-bill-date/" + searchString,
+            type: "GET",
+            success: function (res) {
+                if (res.code === 0) {
+                    let data = res.data;
+                    let html = data.map(ele => {
+                        return `<div id="invoice-top">
+                        <div class="logo"></div>
+                        <div class="info">
+                            <p>${ele.emailStaffPay}</p>
+                        </div><!--End Info-->
+                        <div class="title">
+                            <p>${ele._id}</p>
+                            <p>${ele.timePay}</p>
+                        </div><!--End Title-->
+                    </div><!--End InvoiceTop-->
+                    <div id="invoice-bot">
+                    <div id="table">
+                        <table>
+                            <tr class="tabletitle">
+                                <td class="item">
+                                    <p>Tên món ăn</p>
+                                </td>
+                                <td class="Hours">
+                                    <p>Đơn giá</p>
+                                </td>
+                                <td class="Rate">
+                                    <p>Số lượng</p>
+                                </td>
+                                <td class="subtotal">
+                                    <p>Thành tiền</p>
+                                </td>
+                            </tr>
+                            
+                                ${
+                                    ele.listOrder.map(item=>{
+                                        return `<tr class="service">
+                                                    <td class="tableitem">
+                                                        <p class="itemtext">${item.productInfo.name}</p>
+                                                    </td>
+                                                    <td class="tableitem">
+                                                        <p class="itemtext">${item.price}</p>
+                                                    </td>
+                                                    <td class="tableitem">
+                                                        <p class="itemtext">${item.amount}</p>
+                                                    </td>
+                                                    <td class="tableitem">
+                                                        <p class="itemtext">${item.price*item.amount}</p>
+                                                    </td>
+                                                </tr>`
+                                    })
+                                    
+                                }
+                            
+                            <tr class="tabletitle">
+                                <td></td>
+                                <td></td>
+                                <td class="Rate">
+                                    <h2>Total</h2>
+                                </td>
+                                <td class="payment">
+                                    <h2>${ele.totalPrice}</h2>
+                                </td>
+                            </tr>
+        
+                        </table>
+                    </div>
+                    </div>`
+                    
+                    })
+                    document.querySelector('#invoice').innerHTML = html.join('')
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    })
+}
+searchByDateCheckin()
