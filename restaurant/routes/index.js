@@ -5,7 +5,8 @@ const adminRouter = require('./admin')
 const paymentRouter = require('./payment')
 const chefRouter = require('./chef')
 const errorRouter = require('./error')
-
+const authRouter = require('./auth')
+const apiRouter = require('./api')
 module.exports = function route(app) {
     app.use("/", siteRouter)
     app.use("/user", staffRouter)
@@ -13,5 +14,7 @@ module.exports = function route(app) {
     app.use("/admin", adminRouter)
     app.use("/payment", paymentRouter)
     app.use("/chef", chefRouter)
+    app.use("/auth",authRouter)
+    app.use("/api", apiRouter)
     app.use(errorRouter)
 }

@@ -13,6 +13,10 @@ const expressSession = require('express-session')
 const cookieSession = require('cookie-session')
 const methodOverride = require('method-override')
 const MemoryStore = require('session-memory-store')(expressSession)
+const config = require('./config/config')
+app.set('Secret', config.secret);
+
+
 db.connect()
 
 app.use(express.urlencoded({ extended: true }))
