@@ -27,18 +27,18 @@ function ajaxBill(date)
             if (res.code === 0) {
                 let data = res.data;
                 let html = data.map(ele => {
-                    return `<div class='bill-item'>
+                    return `<div class='bill-item' style="margin-bottom:20px">
                     <div id="invoice-top">
                     <div class='info'>
-                        <p><i>Nhân viên: </i> ${ele.emailStaffPay}</p>
-                    </div><!--End Info-->
+                        <p class='emailStaffPay'><i>Nhân viên: </i>${ele.emailStaffPay}</p>
+                    </div>
                     <div class="title">
                         <p><i>Mã hóa đơn: </i>${ele._id}</p>
-                        <p><i>Thời gian thanh toán: </i>${ele.timePay}</p>
-                    </div><!--End Title-->
-                </div><!--End InvoiceTop-->
-                <div id="invoice-bot" style='border-bottom:1px solid #ccc'>
-                <div id="table">
+                        <p><i>Thời gian: </i>${ele.timePay}</p>
+                    </div>
+                </div>
+                <div id='invoice-bot' style='border-bottom:1px solid #ccc'>
+                <div id='table'>
                     <table class='table'>
                         <tr class="tabletitle">
                             <td class="item">
@@ -57,16 +57,16 @@ function ajaxBill(date)
                             ${
                                 ele.listOrder.map(item=>{
                                     return `<tr class="service">
-                                                <td class="tableitem">
+                                                <td>
                                                     <p class="itemtext">${item.productInfo.name}</p>
                                                 </td>
-                                                <td class="tableitem">
+                                                <td>
                                                     <p class="itemtext">${item.price}.000</p>
                                                 </td>
-                                                <td class="tableitem">
+                                                <td>
                                                     <p class="itemtext">${item.amount}</p>
                                                 </td>
-                                                <td class="tableitem">
+                                                <td>
                                                     <p class="itemtext">${item.price*item.amount}.000</p>
                                                 </td>
                                             </tr>`
@@ -77,7 +77,7 @@ function ajaxBill(date)
                         <tr class="tabletitle">
                             <td></td>
                             <td></td>
-                            <td class="Rate">
+                            <td>
                                 <p>Tổng tiền</p>
                             </td>
                             <td class="payment">
@@ -94,9 +94,15 @@ function ajaxBill(date)
                 document.querySelector('#invoice').innerHTML = html.join('')
             }
             paging()
+
+            document.querySelectorAll('.emailStaffPay').forEach(ele=>{
+                console.log(ele.innerText);
+                ele.innerText.replaceAll(",,","")
+            })
         },
         error: function (err) {
             console.log(err);
         }
     })
 }
+
