@@ -187,6 +187,7 @@ class PaymenController {
             idtable: idtable,
             timeZone: Date.now(),
             timePay: new Date().toLocaleString(),
+            totalPrice: totalPrice,
             listOrder: listOrder,
         }
 
