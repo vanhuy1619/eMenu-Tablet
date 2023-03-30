@@ -132,12 +132,12 @@ function changeAmount() {
                             let htmlp = res.products.map(ele => {
                                 return `<div class='col-md-4 mb-4 col-lg-3 col-6'>
                                             <div style='box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding:6px;height:100%'>
-                                                <div>
-                                                    <img style='height:100px;object-fit:cover' src='${ele.image}' />
+                                                <div style='height:50%'>
+                                                    <img style='height:100%;object-fit:cover' src='${ele.image}' />
                                                 </div>
-                                                <div>
-                                                    <p style ='text-align:center'>${ele.name}</p>
-                                                    <div style='display:flex;justify-content:center'>
+                                                <div style='height:50%'>
+                                                    <div style ='text-align:center;height:50%;padding:4px 0px'>${ele.name}</div>
+                                                    <div style='display:flex;justify-content:center;height:50%;margin-top:6px'>
                                                         <label class="switch">
                                                             <input type="checkbox"  data-id="${ele.id}" ${ele.toggle == true ? 'checked' : ''}>
                                                             <span class="slider round"></span>
