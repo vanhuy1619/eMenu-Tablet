@@ -37,19 +37,6 @@ class ChefController {
         if (!req.session.email)
             return res.json({ code: 2, message: "Vui lòng đăng nhập" })
 
-        // let totalPricePre, amountPre
-
-        // await Order.findOne({ idtable: data.idtable, _id: data._id })
-        //     .then((c) => {
-        //         totalPricePre = c.totalPrice
-        //         c.listOrder.forEach(ele => {
-        //             if (ele.product_id === data.product_id) {
-        //                 amountPre
-        //             }
-        //         })
-        //     })
-
-
         //Nếu hủy
         if (data.status == 0) {
             await Order.updateOne({ idtable: data.idtable, _id: data._id },
@@ -70,7 +57,6 @@ class ChefController {
                 .then(() => res.json({ code: 0, message: "Cập nhật thành công" }))
                 .catch(err => res.json({ code: 1, message: "Thất bại" }))
 
-            if (data.status != 3) {
                 let totalPriceUpdate = 0
                 await Order.findOne({ idtable: data.idtable, _id: data._id })
                     .then((c) => {
@@ -81,7 +67,6 @@ class ChefController {
                     })
 
                 await Order.updateOne({ idtable: data.idtable, _id: data._id }, { totalPrice: totalPriceUpdate })
-            }
         }
     }
 

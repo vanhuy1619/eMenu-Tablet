@@ -130,7 +130,7 @@ function changeAmount() {
                             // console.log(res);
                             res.products.sort((a, b) => String(a.type).localeCompare(String(b.type)));
                             let htmlp = res.products.map(ele => {
-                                return `<div class='col-md-3 mb-4'>
+                                return `<div class='col-md-4 mb-4 col-lg-3 col-6'>
                                             <div style='box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding:6px;height:100%'>
                                                 <div>
                                                     <img style='height:100px;object-fit:cover' src='${ele.image}' />

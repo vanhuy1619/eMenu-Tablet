@@ -10,8 +10,6 @@ class AdminController {
             userObj = users;
         });
 
-        // console.log(userObj);
-
         await User.findOne({ email: req.session.email }).then((user) =>
             res.render("admin", {
                 users: userObj,
@@ -24,7 +22,7 @@ class AdminController {
         let date = req.params.date
         let day = date.replaceAll("-","/")
 
-        await Bill.find({ timePay: { $regex: day } })
+        await Bill.find({ timePay: { $regex: day } }).sort({ timePay: "desc" })
             .then(bills => {
                 res.json({ code: 0, data: bills})
         })

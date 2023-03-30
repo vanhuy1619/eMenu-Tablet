@@ -175,9 +175,10 @@ class PaymenController {
 
         let idtable = req.params.idtable
         let listOrder
-
+        let totalPrice
         await Order.findOne({ idtable: idtable })
             .then((order) => {
+                totalPrice = order.totalPrice
                 listOrder = order.listOrder
             })
 

@@ -1,0 +1,57 @@
+<div class="nav-bar">
+    <div class="header-logo">
+        <a href="/">
+            <img src="images/mkav-tea/logo_transparent.png" alt="">
+        </a>
+    </div>
+    <ul class="menu">
+        <a href="/">
+            <li class="menu-item">Trang Chủ</li>
+        </a>
+        <a href="/store">
+            <li class="menu-item">Cửa Hàng</li>
+        </a>
+        <a href="/contact">
+            <li class="menu-item">Liên Hệ</li>
+        </a>
+        <% if(locals.user) { %>
+            <% if(user.position==0 || user.position==2) { %>
+                <a href="/user/table">
+                    <li class="menu-item">Mở bàn</li>
+                </a>
+                <% } %>
+                    <% if(user.position==2) { %>
+                        <a href="/admin/hoa-don">
+                            <li class="menu-item">Hóa đơn</li>
+                        </a>
+                        <% } %>
+                            <% if(user.position==1) { %>
+                                <a href="/chef">
+                                    <li class="menu-item">Khu vực bếp</li>
+                                </a>
+                                <% } %>
+                                    <% } %>
+                                        <% if (!locals.user) { %>
+                                            <li class="btn-group">
+                                                <button class="btn" id="login-btn">Đăng Nhập</button>
+                                                <button class="btn btn-transparent" id="register-btn">Đăng Ký</button>
+                                            </li>
+                                            <% } else {%>
+                                                <li class="btn-group user-group">
+                                                    <a href="/admin/?tab=employee-manager"><img src="<%= user.image %>"
+                                                            alt=""></a>
+                                                    <div class="dropdown">
+                                                        <i class="fas fa-sort-down"></i>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <i class="fas fa-sign-out-alt"></i>
+                                                                <a href="/logout">Đăng xuất</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+
+                                                <% }%>
+
+    </ul>
+</div>

@@ -58,113 +58,117 @@
             </div>
         </header>
         <section class="profile-main">
-            <div class="container">
-                <div class="profile-main__left">
-                    <div class="profile-main__left--item active">
-                        <i class="fas fa-shopping-cart"></i>
-                        Quản lí đơn đặt món
-                    </div>
-                    <div class="profile-main__left--item" id="navmenu">
-                        <i class="fas fa-list-check"></i>
-                        Quản lý tình trạng menu
-                    </div>
-                    <div class="profile-main__left--item" id="logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Đăng xuất
+            <div class="row" style="padding: 2rem 12%;">
+                <div class="col-md-4">
+                    <div class="profile-main__left">
+                        <div class="profile-main__left--item active">
+                            <i class="fas fa-shopping-cart"></i>
+                            Quản lí đơn đặt món
+                        </div>
+                        <div class="profile-main__left--item" id="navmenu">
+                            <i class="fas fa-list-check"></i>
+                            Quản lý tình trạng menu
+                        </div>
+                        <div class="profile-main__left--item" id="logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Đăng xuất
+                        </div>
                     </div>
                 </div>
-                <div class="profile-main__right">
-                    <div class="tab" id="order-manager">
-                        <div class="order row" >
-                            <% if(locals.orders) { %>
-                                <% orders.forEach(function(order) { %>
-                                    <div class="order-title">
-                                        <div class=" d-flex justify-content-between pt-3 pl-3 pr-3">
-                                            <span class="h4 text-info">Bàn <span class="h4 text-success">
-                                                    <%= order.idtable %>
-                                                </span>
+                <div class="col-md-8">
+                    <div class="profile-main__right">
+                        <div class="tab" id="order-manager">
+                            <div class="order row" >
+                                <% if(locals.orders) { %>
+                                    <% orders.forEach(function(order) { %>
+                                        <div class="order-title">
+                                            <div class=" d-flex justify-content-between pt-3 pl-3 pr-3">
+                                                <span class="h4 text-info">Bàn <span class="h4 text-success">
+                                                        <%= order.idtable %>
+                                                    </span>
+                                            </div>
+                                            <div class=" d-flex justify-content-between pb-3 pl-3 pr-3">
+                                            </div>
                                         </div>
-                                        <div class=" d-flex justify-content-between pb-3 pl-3 pr-3">
-                                        </div>
-                                    </div>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-center align-middle">#</th>
-                                                <th scope="col" class="text-center align-middle">Tên món ăn</th>
-                                                <th scope="col" class="text-center align-middle">Số lượng</th>
-                                                <th scope="col" class="text-center align-middle">Ghi chú</th>
-                                                <th scope="col" class="text-center align-middle">Thời gian đặt</th>
-                                                <th scope="col" class="text-center align-middle">Thao tác</th>
-                                                <th scope="col" class="text-center align-middle">Hủy</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% order.listOrder.forEach(function(product, index) { %>
+                                        <table class="table table-bordered">
+                                            <thead>
                                                 <tr>
-                                                    <th scope="row" class="text-center align-middle">
-                                                        <%= (index + 1) %>
-                                                    </th>
-                                                    <td class="align-middle">
-                                                        <%= product.productInfo.name %>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <% if(product.status>= 2) { %>
-                                                            <p type="number" class="amountEdit" id="amountEdit"
-                                                                value="<%= product.amount %>"
-                                                                price="<%= product.price %>">
-                                                                <%= product.amount %>
-                                                            </p>
-                                                            <% } else {%>
-                                                                <input type="number" class="amountEdit" min="1"
-                                                                    max="<%= product.amount %>" id="amountEdit"
+                                                    <th scope="col" class="text-center align-middle">#</th>
+                                                    <th scope="col" class="text-center align-middle">Tên món ăn</th>
+                                                    <th scope="col" class="text-center align-middle">Số lượng</th>
+                                                    <th scope="col" class="text-center align-middle">Ghi chú</th>
+                                                    <th scope="col" class="text-center align-middle">Thời gian đặt</th>
+                                                    <th scope="col" class="text-center align-middle">Thao tác</th>
+                                                    <th scope="col" class="text-center align-middle">Hủy</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% order.listOrder.forEach(function(product, index) { %>
+                                                    <tr>
+                                                        <th scope="row" class="text-center align-middle">
+                                                            <%= (index + 1) %>
+                                                        </th>
+                                                        <td class="align-middle">
+                                                            <%= product.productInfo.name %>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <% if(product.status>= 2) { %>
+                                                                <p type="number" class="amountEdit" id="amountEdit"
                                                                     value="<%= product.amount %>"
                                                                     price="<%= product.price %>">
-                                                                <% } %>
-                                                                    </input>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <%= product.note %>
-                                                    </td>
-
-                                                    <td class="text-center align-middle">
-                                                        <%= product.timeOrder %>
-                                                    </td>
-                                                    <td class="text-center align-middle">
-                                                        <% if(product.status==1) { %>
-                                                            <button class="btn btn-info mb-2" action="dangchebien"
-                                                                id="cooking" status="2"
-                                                                data-idzone="<%= product.idZone %>"
-                                                                data-idtable="<%= product.idtable%>"
-                                                                data-iditem="<%= product.productInfo._id %>"
-                                                                data-product_id="<%= product.product_id %>"
-                                                                data-_id="<%= order._id %>">Thực hiện</button>
-                                                            <% } %>
-                                                                <% if(product.status==2 || product.status==1 ) { %>
-                                                                    <button class="btn btn-success" action="hoantat"
-                                                                        id="cooking" status="3"
-                                                                        data-idzone="<%= product.idZone %>"
-                                                                        data-idtable="<%= product.idtable%>"
-                                                                        data-iditem="<%= product.productInfo._id %>"
-                                                                        data-product_id="<%= product.product_id %>"
-                                                                        data-_id="<%= order._id %>">Hoàn tất</button>
+                                                                    <%= product.amount %>
+                                                                </p>
+                                                                <% } else {%>
+                                                                    <input type="number" class="amountEdit" min="1"
+                                                                        max="<%= product.amount %>" id="amountEdit"
+                                                                        value="<%= product.amount %>"
+                                                                        price="<%= product.price %>">
                                                                     <% } %>
-                                                    </td>
-                                                    <% if(product.status==1) { %>
-                                                        <td class="text-center align-middle">
-                                                            <button class="btn btn-danger" action="huy" id="cooking"
-                                                                status="0" data-idzone="<%= product.idZone %>"
-                                                                data-idtable="<%= product.idtable%>"
-                                                                data-iditem="<%= product.productInfo._id %>"
-                                                                data-product_id="<%= product.product_id %>"
-                                                                data-_id="<%= order._id %>">Hủy</button>
+                                                                        </input>
                                                         </td>
-                                                        <% } %>
-                                                </tr>
-                                                <% }) %>
-                                        </tbody>
-                                    </table>
-                                    <% })} %>
+                                                        <td class="align-middle">
+                                                            <%= product.note %>
+                                                        </td>
+    
+                                                        <td class="text-center align-middle">
+                                                            <%= product.timeOrder %>
+                                                        </td>
+                                                        <td class="text-center align-middle">
+                                                            <% if(product.status==1) { %>
+                                                                <button class="btn btn-info mb-2" action="dangchebien"
+                                                                    id="cooking" status="2"
+                                                                    data-idzone="<%= product.idZone %>"
+                                                                    data-idtable="<%= product.idtable%>"
+                                                                    data-iditem="<%= product.productInfo._id %>"
+                                                                    data-product_id="<%= product.product_id %>"
+                                                                    data-_id="<%= order._id %>">Thực hiện</button>
+                                                                <% } %>
+                                                                    <% if(product.status==2 || product.status==1 ) { %>
+                                                                        <button class="btn btn-success" action="hoantat"
+                                                                            id="cooking" status="3"
+                                                                            data-idzone="<%= product.idZone %>"
+                                                                            data-idtable="<%= product.idtable%>"
+                                                                            data-iditem="<%= product.productInfo._id %>"
+                                                                            data-product_id="<%= product.product_id %>"
+                                                                            data-_id="<%= order._id %>">Hoàn tất</button>
+                                                                        <% } %>
+                                                        </td>
+                                                        <% if(product.status==1) { %>
+                                                            <td class="text-center align-middle">
+                                                                <button class="btn btn-danger" action="huy" id="cooking"
+                                                                    status="0" data-idzone="<%= product.idZone %>"
+                                                                    data-idtable="<%= product.idtable%>"
+                                                                    data-iditem="<%= product.productInfo._id %>"
+                                                                    data-product_id="<%= product.product_id %>"
+                                                                    data-_id="<%= order._id %>">Hủy</button>
+                                                            </td>
+                                                            <% } %>
+                                                    </tr>
+                                                    <% }) %>
+                                            </tbody>
+                                        </table>
+                                        <% })} %>
+                            </div>
                         </div>
                     </div>
                 </div>
