@@ -14,8 +14,10 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Baloo+2:wght@600;700&Barlow:wght@400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/styles/admin.css">
+    <link rel="stylesheet" href="/styles/paginate.css">
     <link rel="stylesheet" href="/styles/bill.css">
     <link rel="stylesheet" href="/styles/loading.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -26,6 +28,9 @@
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <link rel="stylesheet" href="/calendar/css/mobiscroll.jquery.min.css">
     <script src="/calendar/js/mobiscroll.jquery.min.js"></script>
+
+    <!-- PAGINING -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.js'></script>
 </head>
 <style>
     .profile-main .container {
@@ -142,6 +147,7 @@
 </body>
 <script src="/scripts/admin.js"></script>
 <script src="/scripts/loading.js"></script>
+<script src="/scripts/search_pagin.js"></script>
 <script>
     $("#logout").click(function () {
         window.location.href = "/logout"

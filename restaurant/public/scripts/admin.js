@@ -27,10 +27,10 @@ function ajaxBill(date)
             if (res.code === 0) {
                 let data = res.data;
                 let html = data.map(ele => {
-                    return `<div id="invoice-top">
-                    <div class="logo"></div>
+                    return `<div class='bill-item'>
+                    <div id="invoice-top">
                     <div class='info'>
-                        <p><i>Nhân viên thanh toán: </i> ${ele.emailStaffPay}</p>
+                        <p><i>Nhân viên: </i> ${ele.emailStaffPay}</p>
                     </div><!--End Info-->
                     <div class="title">
                         <p><i>Mã hóa đơn: </i>${ele._id}</p>
@@ -39,7 +39,7 @@ function ajaxBill(date)
                 </div><!--End InvoiceTop-->
                 <div id="invoice-bot" style='border-bottom:1px solid #ccc'>
                 <div id="table">
-                    <table>
+                    <table class='table'>
                         <tr class="tabletitle">
                             <td class="item">
                                 <p>Tên món ăn</p>
@@ -87,11 +87,13 @@ function ajaxBill(date)
     
                     </table>
                 </div>
-                </div>`
+                </div>
+                    </div>`
                 
                 })
                 document.querySelector('#invoice').innerHTML = html.join('')
             }
+            paging()
         },
         error: function (err) {
             console.log(err);
