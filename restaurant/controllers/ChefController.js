@@ -9,15 +9,15 @@ class ChefController {
                 if (user) {
                     await Order.find({})
                         .then(orders => {
-                            orders.forEach(ele=>{
+                            orders.forEach(ele => {
                                 ele.listOrder.sort(function (a, b) {
                                     return b.idZone - a.idZone
                                 })
                             }),
-                            res.render('chef', {
-                                chef: user,
-                                orders: orders
-                            })
+                                res.render('chef', {
+                                    chef: user,
+                                    orders: orders
+                                })
                         })
                 }
             })
@@ -57,23 +57,28 @@ class ChefController {
                 .then(() => res.json({ code: 0, message: "Cập nhật thành công" }))
                 .catch(err => res.json({ code: 1, message: "Thất bại" }))
 
-                let totalPriceUpdate = 0
-                await Order.findOne({ idtable: data.idtable, _id: data._id })
-                    .then((c) => {
-                        c.listOrder.forEach(ele => {
-                            console.log(ele.amount * ele.price);
-                            totalPriceUpdate = totalPriceUpdate + ele.amount * ele.price;
-                        })
+            let totalPriceUpdate = 0
+            await Order.findOne({ idtable: data.idtable, _id: data._id })
+                .then((c) => {
+                    c.listOrder.forEach(ele => {
+                        console.log(ele.amount * ele.price);
+                        totalPriceUpdate = totalPriceUpdate + ele.amount * ele.price;
                     })
+                })
 
-                await Order.updateOne({ idtable: data.idtable, _id: data._id }, { totalPrice: totalPriceUpdate })
+            await Order.updateOne({ idtable: data.idtable, _id: data._id }, { totalPrice: totalPriceUpdate })
         }
     }
 
     async updateToggleFood(req, res) {
         let data = req.body
         await Product.findOneAndUpdate({ id: data.id }, { toggle: data.toggle })
-            .then(() => res.json({ code: 0, message: 'Cập nhật trạng thái món ăn thành công' }))
+            .then((data) => {
+                if (data != null)
+                    res.json({ code: 0, message: 'Cập nhật trạng thái món ăn thành công' })
+                else
+                    res.json({ code: 0, message: 'MÃ id sai' })
+            })
             .catch(err => res.json({ code: 0, message: 'Cập nhật trạng thái món ăn thất bại' }))
     }
 }
