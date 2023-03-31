@@ -7,7 +7,7 @@ let locationArray = [
                 idStore: 1,
                 lat: 10.7327923,
                 lng: 106.6970248,
-                storeName: "Mkav Tea đại học Tôn Đức Thắng",
+                storeName: "Gogi House đại học Tôn Đức Thắng",
                 address: "19 Nguyễn Hữu Thọ, phường Tân Phong, Quận 7, TP. Hồ Chí Minh",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
@@ -16,7 +16,7 @@ let locationArray = [
                 idStore: 2,
                 lat: 10.7422836,
                 lng: 106.6977716,
-                storeName: "Mkav Tea Lotte Mart quận 7",
+                storeName: "Gogi House Lotte Mart quận 7",
                 address: "469 Nguyễn Hữu Thọ, phường Tân Hưng, Quận 7, TP. Hồ Chí Minh",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
@@ -25,7 +25,7 @@ let locationArray = [
                 idStore: 3,
                 lat: 10.8274668,
                 lng: 106.719508,
-                storeName: "Mkav Tea Gigamall",
+                storeName: "Gogi House Gigamall",
                 address: "242 Đ. Phạm Văn Đồng, Hiệp Bình Chánh, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
@@ -34,7 +34,7 @@ let locationArray = [
                 idStore: 4,
                 lat: 10.8011622,
                 lng: 106.6152058,
-                storeName: "Mkav Tea Aeon Mall",
+                storeName: "Gogi House Aeon Mall",
                 address: "30 Đ. Tân Thắng, Sơn Kỳ, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
@@ -43,7 +43,7 @@ let locationArray = [
                 idStore: 5,
                 lat: 10.7741656,
                 lng: 106.7014805,
-                storeName: "Mkav Tea phố đi bộ Nguyễn Huệ",
+                storeName: "Gogi House phố đi bộ Nguyễn Huệ",
                 address: "22 Nguyễn Huệ, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh 700000, Việt Nam",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
@@ -58,7 +58,7 @@ let locationArray = [
                 idStore: 1,
                 lat: 13.1012724,
                 lng: 109.3066399,
-                storeName: "Mkav Tea vincom Tuy Hòa",
+                storeName: "Gogi House vincom Tuy Hòa",
                 address: "ĐL Hùng Vương, Phường7, Tuy Hòa, Phú Yên, Việt Nam",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
@@ -67,7 +67,7 @@ let locationArray = [
                 idStore: 2,
                 lat: 13.1907432,
                 lng: 109.2948169,
-                storeName: "Mkav Tea Tuy An",
+                storeName: "Gogi House Tuy An",
                 address: "An Chấn, Phú Yên, Việt Nam",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
@@ -82,7 +82,7 @@ let locationArray = [
                 idStore: 1,
                 lat: 10.0030007,
                 lng: 105.0790266,
-                storeName: "Mkav Tea vincom Rạch Giá",
+                storeName: "Gogi House vincom Rạch Giá",
                 address: "Phường Vĩnh Bảo, Tp. Rạch Giá, Kiên Giang, Việt Nam",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
@@ -91,7 +91,7 @@ let locationArray = [
                 idStore: 2,
                 lat: 10.07398,
                 lng: 105.0840025,
-                storeName: "Mkav Tea Phi Thông",
+                storeName: "Gogi House Phi Thông",
                 address: "Chợ, Tp. Rạch Giá, Kiên Giang, Việt Nam",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
@@ -106,7 +106,7 @@ let locationArray = [
                 idStore: 1,
                 lat: 10.2910912,
                 lng: 105.7622278,
-                storeName: "Mkav Tea vincom Sa Đéc",
+                storeName: "Gogi House vincom Sa Đéc",
                 address: "Phường 1, Sa Đéc, Đồng Tháp, Việt Nam",
                 tel: "0865997531",
                 time: "Thứ Hai - Chủ Nhật: 09h00 - 22h00"
