@@ -3,3 +3,25 @@ status order:
 1: Chờ xác nhận
 2: Đang chế biến (thực hiện)
 3: Hoàn tất
+
+***Connect string mongodb trước khi chạy
+Mở project, bật cửa sửa terminal và gõ thứ tự các lệnh sau:
+1. npm install express
+2. npm start
+
+
+ROUTER:
+1: nhân viên phục vụ
+  email: vanhuy@gmail.com
+  password: 123456
+
+  email: phuc@gmail.com
+  password: 123456
+
+2. Nhân viên bếp
+  email: thanhthuy@gmail.com
+  password: 123456
+
+3. Admin
+  email: admin@gmail.com
+  password: 123456
