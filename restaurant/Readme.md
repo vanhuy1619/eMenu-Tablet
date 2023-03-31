@@ -19,7 +19,7 @@ Các bước thực hiện:
         "message": "authentication done ",
         "token": "......................."
     }
-    Copy token đó, trong mục 'Headers', thêm thành Key 'access-token' với value là token ở vừa Copy
+    Copy token đó, trong mục 'Headers', thêm Key 'access-token' với value là token ở vừa Copy
 2. Thực hiện lấy API
     Url cho các API: http://localhost:3000/api/[params]    (được liệt kê trong file routes/api)
     Ví dụ:
