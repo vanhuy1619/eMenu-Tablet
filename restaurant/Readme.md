@@ -1,9 +1,3 @@
-
-<style>
-  .markdown-body ul, .markdown-body ol {
-    padding-left: 0;
-}
-</style>
 <ul>
   <p>Status order:</p>
   <li>0: Hủy</li>
